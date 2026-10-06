@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Palette: cool paper, deep ink, Majorelle blue accent (a nod to Marrakech), plain status colours. */
+:root {
+  --canvas: 245 246 249; --surface: 255 255 255; --sunken: 237 239 244; --ink: 24 32 48; --muted: 88 98 116; --line: 219 223 231;
+  --accent: 75 63 203; --accentsoft: 236 234 252;
+  --ok: 18 112 70; --oksoft: 227 243 234; --warn: 155 88 6; --warnsoft: 252 241 220; --bad: 178 34 24; --badsoft: 252 232 230;
+  --neutral: 99 109 127; --neutralsoft: 236 238 243;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --canvas: 14 18 27; --surface: 21 26 37; --sunken: 29 35 49; --ink: 229 233 241; --muted: 150 160 178; --line: 44 52 69;
+    --accent: 156 146 255; --accentsoft: 39 35 78;
+    --ok: 94 200 145; --oksoft: 19 46 34; --warn: 232 172 84; --warnsoft: 55 39 14; --bad: 246 125 114; --badsoft: 60 24 22;
+    --neutral: 152 162 178; --neutralsoft: 35 41 55;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --canvas: 14 18 27; --surface: 21 26 37; --sunken: 29 35 49; --ink: 229 233 241; --muted: 150 160 178; --line: 44 52 69;
+  --accent: 156 146 255; --accentsoft: 39 35 78;
+  --ok: 94 200 145; --oksoft: 19 46 34; --warn: 232 172 84; --warnsoft: 55 39 14; --bad: 246 125 114; --badsoft: 60 24 22;
+  --neutral: 152 162 178; --neutralsoft: 35 41 55;
+  color-scheme: dark;
+}
+html { scroll-padding-top: env(safe-area-inset-top, 0px); height: 100%; }
+body { background: rgb(var(--canvas)); color: rgb(var(--ink)); font-feature-settings: 'tnum' 1; -webkit-font-smoothing: antialiased; min-height: 100%; }
+a { color: rgb(var(--accent)); }
+:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+.tabular { font-variant-numeric: tabular-nums; }
+.scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.grid-paper {
+  background-image: linear-gradient(rgb(var(--line) / .5) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--line) / .5) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+/* Passport guilloche-style security background, drawn with CSS only */
+.passport-bg {
+  background-color: rgb(var(--surface));
+  background-image:
+    repeating-radial-gradient(circle at 85% 20%, rgb(var(--accent) / .07) 0 1px, transparent 1px 9px),
+    repeating-radial-gradient(circle at 10% 90%, rgb(var(--accent) / .05) 0 1px, transparent 1px 11px);
+}
+@keyframes stamp { 0% { transform: scale(1.6) rotate(-14deg); opacity: 0; } 60% { transform: scale(.95) rotate(-8deg); opacity: 1; } 100% { transform: scale(1) rotate(-8deg); opacity: 1; } }
+.stamp-in { animation: stamp .5s cubic-bezier(.2,.8,.2,1) both .25s; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise .35s ease-out both; }
+
+@media print {
+  @page { size: A4; margin: 10mm; }
+  body { background: #fff !important; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  .print-area { box-shadow: none !important; border: 1px solid #ccc !important; }
+  main { padding: 0 !important; }
+}
+.print-only { display: none; }

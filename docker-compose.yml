@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    ports: ["8080:8080"]
+    read_only: true
+    tmpfs: ["/tmp", "/var/cache/nginx"]
+    security_opt: ["no-new-privileges:true"]
